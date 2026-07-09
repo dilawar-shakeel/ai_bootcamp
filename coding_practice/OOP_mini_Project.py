@@ -73,7 +73,7 @@ class vending_machine_inventory_and_cash():
             return False
         
     def update_invenory(self,item,qty=1):
-        self.vending_machine_inventory[item]["quantity"] -= qty
+        self.vending_machine_inventory[item]["quantity"] += qty
         return self.vending_machine_inventory[item]["quantity"]
 
     def menu(self):
