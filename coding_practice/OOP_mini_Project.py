@@ -99,7 +99,7 @@ class Vending_machine_state_managment (vending_machine_inventory_and_cash):
     
     def idle_state(self):
         while True:
-            self.inserted_cash=float(input("Idle State -> (Max: 500 PKR)Please Insert Cash: "))
+            self.inserted_cash=float(input("Idle State :-> (Max: 500 PKR)Please Insert Cash: "))
             if self.is_inserted_cash_valid():
                 break
             else:
