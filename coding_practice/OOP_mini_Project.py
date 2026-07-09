@@ -28,6 +28,40 @@ class vending_machine_inventory_and_cash():
     }
 }
 
+
+    def restock(self):
+        """Displays the inventory menu first, then prompts the user to restock an item."""
+        # 1. Print the menu at the start
+        print("\n--- Current Vending Machine Inventory ---")
+        print(f"{'ID':<5} {'Product Name':<20} {'Price':<10} {'Quantity':<10}")
+        print("-" * 50)
+        for item_id, details in self.vending_machine_inventory.items():
+            print(f"{item_id:<5} {details['product_name']:<20} {details['price']:<10.1f} {details['quantity']:<10}")
+        print("-" * 50 + "\n")
+
+        # 2. Prompt user for input
+        item_id = input("Enter the item ID to restock: ").strip()
+        
+        if item_id not in self.vending_machine_inventory:
+            print(f"Error: Product ID '{item_id}' does not exist.")
+            return False
+            
+        try:
+            quantity = int(input(f"How many units of {self.vending_machine_inventory[item_id]['product_name']} are you adding?: "))
+        except ValueError:
+            print("Error: Quantity must be a whole number.")
+            return False
+            
+        if quantity <= 0:
+            print("Error: Restock quantity must be greater than zero.")
+            return False
+            
+        # 3. Update the inventory
+        product = self.vending_machine_inventory[item_id]
+        product["quantity"] += quantity
+        print(f"Successfully restocked {quantity} x {product['product_name']}. New total: {product['quantity']}.")
+        return True
+
     def get_min_order_value(self):
         x = [self.vending_machine_inventory[i]["price"] for i in self.vending_machine_inventory if self.is_available(i)]
         return min(x)
@@ -134,10 +168,9 @@ class Vending_machine_state_managment (vending_machine_inventory_and_cash):
             
     def get_remainig_cash(self):
         self.returning_cash= self.inserted_cash - self.order_value
-        return self.returning_cash
-    
-    
+        return self.returning_cash    
         
 
 One = Vending_machine_state_managment()
-One.idle_state()
+# One.idle_state()
+One.restock()
